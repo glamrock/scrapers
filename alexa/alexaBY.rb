@@ -1,6 +1,6 @@
 ##  Via 
 # How to run:
-#   ruby alexaby.rb
+#   ruby alexaru.rb
 #
 # Output:
 #   20 files each with the data in csv format
@@ -23,7 +23,7 @@ require 'csv'
  
 def bar(li)
   begin
-    site_link=li.css("div.desc-container h2 a")[0].content
+    site_link=li.css("p.desc-paragraph a")[0].content
     [site_link]
   rescue
     []
@@ -32,7 +32,7 @@ end
  
 def foo1(url)
   doc = Nokogiri::HTML(open(url))
-  listings=doc.css(".site-listing")
+  listings=doc.css("li.site-listing")
   output = listings.collect{|li| bar(li) }
 end
  
@@ -42,7 +42,7 @@ def foo2(data, i)
   end
 end
  
-urls = (1..20).to_a.map{|i| "http://www.alexa.com/topsites/countries;#{i}/BY "}
+urls = (0..19).to_a.map{|i| "http://www.alexa.com/topsites/countries;#{i}/BY "}
 urls.each_with_index do |url,i|
   data=foo1(url)
   foo2(data,i)
